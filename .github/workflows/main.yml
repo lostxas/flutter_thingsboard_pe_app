@@ -15,11 +15,17 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.32.7'  # 支持 Dart SDK ≥3.5.1
+          flutter-version: '3.32.7'
           channel: stable
 
       - name: Get dependencies
         run: flutter pub get
+
+      - name: Create l10n output directory
+        run: mkdir -p lib/l10n/generated
+
+      - name: Generate localizations
+        run: flutter gen-l10n
 
       - name: Build APK
         run: flutter build apk --release
