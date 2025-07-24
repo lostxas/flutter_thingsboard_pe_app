@@ -21,6 +21,12 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
+      - name: Check for l10n.yaml
+        run: ls -la | grep l10n.yaml
+
+      - name: Check for intl_en.arb
+        run: ls -la lib/l10n/ | grep intl_en.arb
+
       - name: Create l10n output directory
         run: mkdir -p lib/l10n/generated
 
