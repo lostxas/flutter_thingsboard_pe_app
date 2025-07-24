@@ -1,34 +1,37 @@
-name: First Build
+name: Flutter Build Android
 
 on:
-  workflow_dispatch:  # 手动触发构建
   push:
     branches:
-      - release/1.6.0  # 或者你想要自动触发构建的分支
+      - release/1.6.0
+  workflow_dispatch:
 
 jobs:
   build:
-    name: Build APK
     runs-on: ubuntu-latest
+    name: Build Flutter Android App
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Flutter
+      - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.32.7'  # 根据需要调整版本
+          flutter-version: '3.24.4'
           channel: stable
 
       - name: Get dependencies
         run: flutter pub get
 
+      - name: Run Flutter Doctor
+        run: flutter doctor -v
+
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Upload APK artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-apk
+          name: flutter-android-apk
           path: build/app/outputs/flutter-apk/app-release.apk
